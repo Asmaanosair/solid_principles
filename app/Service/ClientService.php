@@ -2,6 +2,8 @@
 
 namespace App\Service;
 
+use App\Models\Client;
+
 class ClientService
 {
     /**
@@ -10,5 +12,10 @@ class ClientService
     public function __construct()
     {
         //
+    }
+
+    public function create(array $data) : Client
+    {
+        return  Client::create($data);
     }
 }
