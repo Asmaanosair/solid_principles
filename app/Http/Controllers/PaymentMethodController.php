@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StorePaymentMethodRequest;
 use App\Http\Requests\UpdatePaymentMethodRequest;
 use App\Models\PaymentMethod;
+use App\Service\PaymentService;
 
 class PaymentMethodController extends Controller
 {
@@ -62,5 +63,9 @@ class PaymentMethodController extends Controller
     public function destroy(PaymentMethod $paymentMethod)
     {
         //
+    }
+    public function pay(PaymentService $paymentMethod,$amount)
+    {
+        $paymentMethod->pay($amount);
     }
 }
