@@ -2,25 +2,16 @@
 
 namespace App\Service;
 
+use App\Factory\PaymentMethodFactory;
 use App\Http\Requests\UpdatePaymentMethodRequest;
 use App\Interface\PaymentMethodInterface;
+use App\Interface\PaymentRefundInterface;
+use DomainException;
 
 readonly class PaymentService
 {
-    /**
-     * Create a new class instance.
-     */
-    public function __construct( private  PaymentMethodInterface $paymentMethod)
-    {
-        //
-    }
+    public function __construct(private PaymentMethodFactory $factory) {}
 
-    /**
-     * Before Using Open Closed Principle
-     * @param $amount
-     * @param $method
-     * @return void
-     */
     public function payOld($amount,$method): void
     {
         if($method=="paypal")
@@ -38,12 +29,14 @@ readonly class PaymentService
     }
 
     /**
-     * After Using Open Closed Principle
-     * @param $amount
+     * After Using LSP
+     * @param float $amount
+     * @param string $method
      * @return void
      */
-    public function pay($amount): void
+    public function pay(float $amount,string $method): void
     {
-        $this->paymentMethod->pay($amount);
+        $paymentMethod = $this->factory->make($method);
+        $paymentMethod->pay($amount);
     }
 }

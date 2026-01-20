@@ -6,6 +6,8 @@ use App\Http\Requests\StorePaymentMethodRequest;
 use App\Http\Requests\UpdatePaymentMethodRequest;
 use App\Models\PaymentMethod;
 use App\Service\PaymentService;
+use App\Service\RefundService;
+use Exception;
 
 class PaymentMethodController extends Controller
 {
@@ -64,8 +66,16 @@ class PaymentMethodController extends Controller
     {
         //
     }
-    public function pay(PaymentService $paymentMethod,$amount)
+    public function pay(PaymentService $paymentMethod,$amount,$method)
     {
-        $paymentMethod->pay($amount);
+        $paymentMethod->pay($amount,$method);
+    }
+
+    /**
+     * @throws Exception
+     */
+    public function refund(RefundService $paymentRefund, $amount,$method)
+    {
+        $paymentRefund->refund($amount,$method);
     }
 }
